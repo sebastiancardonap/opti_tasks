@@ -24,6 +24,11 @@ class Wafer:
         self.name = name
         self.priority = priority
         self.recipe = recipe
+        self.priority_number = self._initialize_priority_number()
+        self.compatible_machines = []
 
     def __repr__(self):
         return f"{self.__class__.__name__}({self.name})"
+    
+    def _initialize_priority_number(self) -> float:
+        return PRIORITY_WEIGHTS[self.priority]
