@@ -496,6 +496,10 @@ class MILPScheduler(Scheduler):
         self.model.makespan_constraint = pe.Constraint(self.model.wafers, rule=makespan_rule)
 
     def _define_objective_function(self) -> None:
+        """
+        It defines the objective function to be minimized
+        It is a weighted function between PWCT and Makespan 
+        """
         def objective_function_expression(m):
             return m.pwct_weight * sum(m.priority_number[wafer] * m.end_variable[wafer] for wafer in m.wafers) + m.makespan_weight * m.makespan_variable
         
