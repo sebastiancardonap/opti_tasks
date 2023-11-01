@@ -1,5 +1,7 @@
 from domain_models.input_data import InputData
-from services.schedulers import LegacyScheduler, BetterScheduler, MILPScheduler
+from services.schedulers.legacy_scheduler import LegacyScheduler
+from services.schedulers.better_scheduler import BetterScheduler
+from services.schedulers.milp_scheduler import MILPScheduler
 from services.validators import ScheduleChecker
 
 
@@ -27,7 +29,7 @@ if __name__ == "__main__":
 
     print("\n\n-- Better Scheduler ---------------")
     milp_input_data = InputData.from_csv(path="data/")
-    milp_schedule = MILPScheduler(input_data=milp_input_data).schedule(mip_gap=0.25, seconds_time_limit=3600 * 3, pwct_weight=1)
+    milp_schedule = MILPScheduler(input_data=milp_input_data).schedule(mip_gap=0.99, seconds_time_limit=3600 * 3, pwct_weight=1)
     ScheduleChecker(input_data=milp_input_data, schedule=milp_schedule).check()
     print(f"Makespan: {milp_schedule.makespan:,.2f} hours")
     print(

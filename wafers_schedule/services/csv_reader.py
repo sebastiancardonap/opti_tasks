@@ -5,6 +5,9 @@ import pandas as pd
 
 
 class CsvReader:
+    """
+    Class to load Wafers and MAchines data from csv files
+    """
     def __init__(self, path: str):
         """
         Parameters
@@ -27,7 +30,7 @@ class CsvReader:
         for name, priority, recipe in df.to_records(index=False):
             current_wafer = Wafer(name=name, priority=priority, recipe=recipe)
             wafers.append(current_wafer)
-        
+
         return wafers
 
     def get_machines(self) -> list[Machine]:
@@ -42,12 +45,12 @@ class CsvReader:
         machines = []
         for machine in df['machine'].unique():
             current_df = df[df['machine'] == machine]
-            processing_time_by_recipe = dict(zip(current_df['recipe'], current_df['processing_time']))
-            current_machine = Machine(name=machine, processing_time_by_recipe=processing_time_by_recipe)
+            processing_time_zip = zip(current_df['recipe'], current_df['processing_time'])
+            processing_time_by_recipe = dict(processing_time_zip)
+            current_machine = Machine(machine, processing_time_by_recipe)
             machines.append(current_machine)
-        
         return machines
-    
+
     def _read_csv(self, file_name: str) -> pd.DataFrame:
         """
         Reads a csv file whose name is the input of the method and returns its' pandas DataFrame.
@@ -60,5 +63,4 @@ class CsvReader:
             df = pd.read_csv(path, sep=',')
         except Exception as error:
             raise error
-        
         return df
