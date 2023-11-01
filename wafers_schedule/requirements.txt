@@ -1,0 +1,5 @@
+glpk==0.4.7
+numpy==1.26.1
+pandas==2.1.1
+python-dateutil==2.8.2
+pyomo==6.6.2
